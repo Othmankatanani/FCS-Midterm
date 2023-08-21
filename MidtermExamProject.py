@@ -207,7 +207,7 @@ class EmployeeSystem:
                 print("Invalid choice. Please choose again.")
 
     # Display statistics about employees
-    # Time Complexity: O(n), where n is the number of employees
+    # Time Complexity: O(n), 
     def display_statistics(self):
         total_employees = len(self.employees)
         male_count = sum(1 for emp_data in self.employees.values() if emp_data["Gender"] == "male")
