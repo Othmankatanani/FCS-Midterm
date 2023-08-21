@@ -1,1 +1,2 @@
 emp001, omar, 20230820, male, 1200
+emp002, lolo, 20230821, female, 1200

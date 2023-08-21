@@ -30,7 +30,7 @@ class EmployeeSystem:
         try:
             with open(self.filename, 'w') as file:
                 for emp_id, emp_data in self.employees.items():
-                    line = f"{emp_id}, {emp_data['Username']}, {emp_data['DateJoined']}, {emp_data['Gender']}, {emp_data['Salary']}\n"
+                    line = (f"{emp_id}, {emp_data['Username']}, {emp_data['DateJoined']}, {emp_data['Gender']}, {emp_data['Salary']}\n")
                     file.write(line)
             print("Employee data saved successfully.")
         except IOError:
@@ -140,3 +140,117 @@ class EmployeeSystem:
 
         if login_attempts == max_login_attempts:
             print("Exceeded maximum login attempts. Exiting the program.")
+
+    # Get title based on employee's gender
+    # Time Complexity: O(1)
+    def get_title(self, emp_id):
+        gender = self.employees[emp_id]["Gender"]
+        return "Mr." if gender == "male" else "Ms."
+
+    # Admin menu for managing employees
+    # Time Complexity: O(1) 
+    def admin_menu(self):
+        while True:
+            print("\nAdmin Menu")
+            print("1. Display Statistics")
+            print("2. Add an Employee")
+            print("3. Display all Employees")
+            print("4. Change Employee Salary")
+            print("5. Remove Employee")
+            print("6. Raise Employee Salary")
+            print("7. Exit")
+
+            choice = input("Enter your choice: ")
+
+            if choice == '1':
+                self.display_statistics()
+            elif choice == '2':
+                self.add_employee()
+            elif choice == '3':
+                self.display_all_employees()
+            elif choice == '4':
+                emp_id = input("Enter Employee ID: ")
+                new_salary = int(input("Enter New Salary: "))
+                self.change_salary(emp_id, new_salary)
+            elif choice == '5':
+                emp_id = input("Enter Employee ID: ")
+                self.remove_employee(emp_id)
+            elif choice == '6':
+                emp_id = input("Enter Employee ID: ")
+                raise_percentage = float(input("Enter Raise Percentage (e.g., 1.05 for 5% raise): "))
+                self.raise_salary(emp_id, raise_percentage)
+            elif choice == '7':
+              
+                print("Exiting the program.")
+                self.save_employees_to_file()  # Save employee data before exiting
+                break
+            else:
+                print("Invalid choice. Please choose again.")
+
+    # User menu for normal employees
+    # Time Complexity: O(1) 
+    def user_menu(self, username):
+        while True:
+            print("\nUser Menu")
+            print("1. Check My Salary")
+            print("2. Exit")
+
+            choice = input("Enter your choice: ")
+
+            if choice == '1':
+                self.display_employee(username)
+            elif choice == '2':
+                self.save_login_timestamp(username)  # Save login timestamp before exiting
+                print("Exiting the program.")
+                break
+            else:
+                print("Invalid choice. Please choose again.")
+
+    # Display statistics about employees
+    # Time Complexity: O(n), where n is the number of employees
+    def display_statistics(self):
+        total_employees = len(self.employees)
+        male_count = sum(1 for emp_data in self.employees.values() if emp_data["Gender"] == "male")
+        female_count = total_employees - male_count
+
+        print("Statistics:")
+        print("Total Employees:", total_employees)
+        print("Male Employees:", male_count)
+        print("Female Employees:", female_count)
+
+    # Add a new employee to the system 
+    # Time Complexity: O(1)
+    def add_employee(self):
+        username = input("Enter Username: ")
+        gender = input("Enter Gender male or female : ")
+        salary = int(input("Enter Salary: "))
+
+        # Generate a formatted employee ID 
+        emp_id = f"emp{self.auto_increment_id:03d}"
+        self.auto_increment_id += 1
+
+        date_joined = datetime.datetime.now().strftime("%Y%m%d")
+        self.employees[emp_id] = {
+            "Username": username,
+            "DateJoined": date_joined,
+            "Gender": gender,
+            "Salary": salary
+        }
+        print("Employee added successfully.")
+
+    # Save login timestamp for users
+    # Time Complexity: O(1)
+    def save_login_timestamp(self, username):
+        try:
+            with open("login_timestamps.txt", 'a') as file:
+                timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                file.write(f"{username}: {timestamp}\n")
+                print("Login timestamp saved successfully.")
+        except IOError:
+            print("Error saving login timestamp.")
+
+# Entry point of the program
+if __name__ == "__main__":
+    filename = "employee_data.txt"  # file name
+    employee_system = EmployeeSystem(filename)  # EmployeeSystem class
+    employee_system.run()  # Start the program
