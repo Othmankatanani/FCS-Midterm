@@ -1,7 +1,11 @@
 # FCS-Midterm
+<<<<<<< HEAD
 
 Employees System Plan Information:
 
+=======
+Employees System Plan Information:
+>>>>>>> 34f41404c2d979362d86b4b17a6900065535ad3b
 Created class EmployeeSystem:
 Created Functions:
     def __init__
@@ -38,9 +42,12 @@ Summery:
 References:
 add file format : https://www.pythontutorial.net/python-basics/python-write-text-file/
 Time Format : https://www.programiz.com/python-programming/datetime
+<<<<<<< HEAD
 Python Official Documentation: https://docs.python.org/3/
 Python File I/O: https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
 Sorting in Python: https://docs.python.org/3/howto/sorting.html
+=======
+>>>>>>> 34f41404c2d979362d86b4b17a6900065535ad3b
 
 submitted by othman katanani
 
